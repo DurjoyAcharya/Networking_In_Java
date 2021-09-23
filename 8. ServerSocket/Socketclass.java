@@ -5,7 +5,7 @@ public class Socketclass{
 	{
 		Socket s=new Socket("localhost",9000);
 		DataOutputStream dout=new DataOutputStream(s.getOutputStream());
-		dout.writeUTF("Hello my name is Prajjawal");
+		dout.writeUTF("Hello my name is Durjoy Acharya");
 		dout.flush();
 		dout.close();
 		s.close();
