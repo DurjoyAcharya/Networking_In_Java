@@ -1,12 +1,17 @@
-import java.net.*;
-import java.io.*;
-import java.util.*;
+
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Scanner;
+
 public class MyClient{
-	public static void main(String[] args)throws Exception{
-	Socket s=new Socket("192.168.43.153",6666);
-	DataOutputStream dout=new DataOutputStream(s.getOutputStream());
-	DataInputStream din=new DataInputStream(s.getInputStream());
-	Scanner scan=new Scanner(System.in);
+	public static void main(String[] args)throws IOException {
+	var s=new Socket("localhost",6666);
+	var dout=new DataOutputStream(s.getOutputStream());
+	var din=new DataInputStream(s.getInputStream());
+	var scan=new Scanner(System.in);
 	while(true)
 	{
 		System.out.println("Enter Your message.");
@@ -21,7 +26,6 @@ public class MyClient{
 		}
 		String str1=(String)din.readUTF();
 		System.out.println("Server--->"+str1);
-		
-	}
+		}
 	}
 }
