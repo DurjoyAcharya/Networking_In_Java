@@ -1,15 +1,18 @@
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.util.Scanner;
+
 class TcpServer{
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
-		int i=0;
-		ServerSocket ss=new ServerSocket(5656);
-		Socket s=ss.accept();
-		Scanner scan=new Scanner(System.in);
-		DataOutputStream dout=new DataOutputStream(s.getOutputStream());
-		DataInputStream dis=new DataInputStream(s.getInputStream());
+		var ss=new ServerSocket(5656);
+		var s=ss.accept();
+		System.out.println("Client Connected....");
+		var scan=new Scanner(System.in);
+		var dout=new DataOutputStream(s.getOutputStream());
+		var dis=new DataInputStream(s.getInputStream());
 		while(true)
 		{
 			String str=dis.readUTF();
@@ -26,7 +29,7 @@ class TcpServer{
 			String str1=scan.nextLine();
 			dout.writeUTF(str1);
 			dout.flush();
+			dout.close();
 		}
-		
 	}
 }

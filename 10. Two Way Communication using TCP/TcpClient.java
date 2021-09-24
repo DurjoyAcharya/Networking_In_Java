@@ -1,13 +1,16 @@
-import java.net.*;
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Scanner;
+
 public class TcpClient{
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
-		Scanner scan=new Scanner(System.in);
-		Socket s=new Socket("localhost",5656);
-		DataOutputStream dout=new DataOutputStream(s.getOutputStream());
-		DataInputStream dis=new DataInputStream(s.getInputStream());
+		var scan=new Scanner(System.in);
+		var s=new Socket("localhost",5656);
+		var dout=new DataOutputStream(s.getOutputStream());
+		var dis=new DataInputStream(s.getInputStream());
 		while(true)
 		{
 			System.out.println("Write Your message");
@@ -22,8 +25,6 @@ public class TcpClient{
 			}
 			String str1=(String)dis.readUTF();
 			System.out.println("Server Messaged--->"+str1);
-			
-			
 		}
 	}
 }
