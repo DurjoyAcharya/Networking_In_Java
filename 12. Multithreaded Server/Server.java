@@ -1,29 +1,34 @@
-import java.net.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 public class Server{
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
-		ServerSocket ss=new ServerSocket(6666);
+		var ss=new ServerSocket(6666);
 		while(true)
 		{
-			Socket s=ss.accept();
-			System.out.println("A new client is connected via "+s);
-			DataInputStream dis=new DataInputStream(s.getInputStream());
-			DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+			var s=ss.accept();
+			System.out.println("A new client is connected via "+s.getInetAddress());
+			var dis=new DataInputStream(s.getInputStream());
+			var dout=new DataOutputStream(s.getOutputStream());
 			dout.writeUTF("Enter the name of the client");
 			String name=dis.readUTF();
 			System.out.println("Assigning a new thread to the client");
-			Thread t1=new ClientHandler(s,name,dis,dout);
-			t1.start();
+			var obj=new ClientHandler();
+			obj.setThread(s,name,dis,dout);
+			new Thread(obj::run).start();
 		}
 	}
 }
-class ClientHandler extends Thread{
+class ClientHandler implements Runnable{
 	Socket s;
 	DataInputStream dis;
 	DataOutputStream dout;
 	String strrecieved="",strsent="",name;
-	ClientHandler(Socket s,String name,DataInputStream dis,DataOutputStream dout)
+	public void setThread(Socket s,String name,DataInputStream dis,DataOutputStream dout)
 	{
 		this.s=s;
 		this.dis=dis;
@@ -49,10 +54,9 @@ class ClientHandler extends Thread{
 				System.out.println("Client Messaged "+strrecieved);
 			}
 		}
-		catch(Exception e)
+		catch(IOException e)
 		{
 			System.out.println(e);
 		}
-		
 	}
 }

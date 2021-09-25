@@ -1,13 +1,16 @@
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.Scanner;
+
 public class Client{
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) throws IOException
 	{
-		Socket s=new Socket("localhost",6666);
-		DataOutputStream dout= new DataOutputStream(s.getOutputStream());
-		DataInputStream din=new DataInputStream(s.getInputStream());
-		Scanner scan=new Scanner(System.in);
+		var s=new Socket("127.0.0.1",6666);
+		var dout= new DataOutputStream(s.getOutputStream());
+		var din=new DataInputStream(s.getInputStream());
+		var scan=new Scanner(System.in);
 		while(true)
 		{
 			String strrecived=din.readUTF();
